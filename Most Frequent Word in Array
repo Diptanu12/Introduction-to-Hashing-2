@@ -1,0 +1,99 @@
+Most Frequent Word in Array
+Given an array arr containing N words consisting of lowercase characters. Your task is to find the most frequent word in the array. If multiple words have same frequency, then print the word whose first occurence occurs last in the array as compared to the other strings with same frequency.
+
+Input Format
+Input consist of two lines. The first line contains a number N representing the size of the array. Next line consists of N words separated by space.
+
+Output Format
+Print a single word which is the most frequent word in the array.
+
+Example 1
+Input
+
+3
+geeks for geeks
+Output
+
+geeks
+Explanation
+
+"geeks" comes 2 times.
+
+Example 2
+Input
+
+2
+hello world
+Output
+
+world
+Explanation
+
+"hello" and "world" both have 1 frequency. We print "world" as its first occurrence comes last in the input array.
+
+Constraints
+1 <= N <= 50000
+
+1 <= |each string| <= 50
+
+Note: Sum of length of all strings does not exceed 5*10^5
+
+Topics
+Hashing
+Companies
+Citrix
+Adobe
+Microsoft
+
+
+import java.io.*;
+import java.util.*;
+
+class Solution {
+    public void mostFrequent(String []arr, int n) {
+
+        HashMap<String, int[]> wordCount = new HashMap<>();
+        
+        for (int i = 0; i < n; i++) {
+            String word = arr[i];
+            if (wordCount.containsKey(word)) {
+                wordCount.get(word)[0]++; 
+            } else {
+                wordCount.put(word, new int[]{1, i}); 
+            }
+        }
+
+        String mostFrequentWord = "";
+        int maxFrequency = 0;
+        int latestFirstOccurrence = -1;
+        
+        for (Map.Entry<String, int[]> entry : wordCount.entrySet()) {
+            String word = entry.getKey();
+            int frequency = entry.getValue()[0];
+            int firstOccurrenceIndex = entry.getValue()[1];
+            
+            if (frequency > maxFrequency || (frequency == maxFrequency && firstOccurrenceIndex > latestFirstOccurrence)) {
+                maxFrequency = frequency;
+                latestFirstOccurrence = firstOccurrenceIndex;
+                mostFrequentWord = word;
+            }
+        }
+        
+        // Print the result
+        System.out.print(mostFrequentWord);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        String []arr = new String[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.next();
+        }
+        Solution obj = new Solution();
+        obj.mostFrequent(arr, n);  
+        System.out.println();
+    }
+}
