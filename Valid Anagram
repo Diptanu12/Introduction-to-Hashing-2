@@ -1,0 +1,81 @@
+Valid Anagram
+Given an string str1 and str2, check if they both are anagrams or not.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+Input Format
+Input consists of a 2 lines of String str1 and String str2.
+
+Output Format
+Print "Yes" if they both are valid anagrams else print "No".
+
+Example 1
+Input:
+
+anagram
+grmaana
+Output:
+
+Yes
+Explanation:
+
+Both anagram and gramaana contains same set of characters.
+
+Example 2
+Input:
+
+rat
+car
+Output:
+
+No
+Explanation:
+
+car and rat contain different characters.
+
+Constraints:
+1 <= str1.length, str2.length <= 5 * 10^4
+
+str1 and str2 consist of lowercase English letters.
+Topics
+Strings
+
+
+import java.util.*;
+
+class Solution {
+    static boolean areAnagram(String c1, String c2) {
+        if (c1.length() != c2.length()) {
+            return false;
+        }
+        
+        int[] charCount = new int[26]; 
+        
+        for (int i = 0; i < c1.length(); i++) {
+            charCount[c1.charAt(i) - 'a']++;
+            charCount[c2.charAt(i) - 'a']--;
+        }
+        
+        for (int count : charCount) {
+            if (count != 0) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String str1 = sc.nextLine();
+        String str2 = sc.nextLine();
+        Solution Obj = new Solution();
+        
+        if (Obj.areAnagram(str1, str2))
+            System.out.println("Yes");
+        else
+            System.out.println("No");
+    }
+}
